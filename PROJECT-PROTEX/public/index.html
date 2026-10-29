@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Protex membantu barang hilang kembali ke pemiliknya." />
+    <title>Protex — Temukan kembali</title>
+    <link rel="stylesheet" href="/tailwind.css" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="shell mx-auto max-w-[1440px] px-[6.1%] max-[620px]:px-[17px]">
+      <header class="topbar flex h-[86px] items-center justify-between max-[620px]:h-[68px]">
+        <a class="brand" href="/"><span class="brand-mark">p</span>protex</a>
+        <nav><a href="#laporan">Jelajahi</a><a href="#cara-kerja">Cara kerja</a></nav>
+        <div class="account">
+          <span id="role-badge" class="role-badge" hidden></span>
+          <button id="login-open" class="button button-quiet" type="button">Masuk</button>
+          <button id="register-open" class="button button-dark" type="button">Gabung sekarang</button>
+          <button id="logout" class="button button-quiet" type="button" hidden>Keluar</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow"><span></span> Komunitas saling bantu</p>
+            <h1>Barangmu bisa <em>pulang.</em></h1>
+            <p class="hero-description">Satu laporan kecil bisa jadi jawaban besar. Temukan barang yang hilang, atau bantu pemiliknya menemukan jalan pulang.</p>
+            <div class="hero-actions">
+              <button id="hero-report" class="button button-dark" type="button">Buat laporan <span>↗</span></button>
+              <a class="text-link" href="#laporan">Lihat laporan ↓</a>
+            </div>
+            <p class="community-proof"><span>● ● ●</span> <strong id="report-count">0</strong> laporan dari komunitas</p>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="hero-orbit"></div>
+            <div class="hero-object object-wallet"><span></span><i></i></div>
+            <div class="hero-object object-key"><span>◯</span><i></i></div>
+            <div class="hero-note">✓ &nbsp; Saling terhubung</div>
+          </div>
+          <div class="hero-caption"><span>Tempat yang aman untuk saling menemukan</span><span>01 — Komunitas Protex</span></div>
+        </section>
+
+        <section id="laporan" class="reports-section">
+          <div class="section-heading">
+            <div><p class="eyebrow">Dari komunitas</p><h2>Laporan terbaru</h2><p class="section-subtitle">Mungkin ada sesuatu di sini yang sedang kamu cari.</p></div>
+            <button id="section-report" class="button button-outline" type="button">＋ Tambah laporan</button>
+          </div>
+          <div id="admin-notice" class="admin-notice" hidden>Mode admin aktif — kamu bisa menghapus laporan komunitas.</div>
+          <div class="toolbar">
+            <div id="category-filters" class="filters"><button class="filter-chip is-selected" data-category="all" type="button">Semua</button></div>
+            <label class="search"><span>⌕</span><input id="search-input" type="search" placeholder="Cari barang atau lokasi" aria-label="Cari barang atau lokasi" /></label>
+          </div>
+          <div class="type-filters">
+            <button class="type-filter is-selected" data-type="all" type="button">Semua laporan</button>
+            <button class="type-filter" data-type="hilang" type="button">Barang hilang</button>
+            <button class="type-filter" data-type="ditemukan" type="button">Barang ditemukan</button>
+          </div>
+          <div id="reports-grid" class="reports-grid" aria-live="polite"><div class="loading">Memuat laporan...</div></div>
+        </section>
+
+        <section id="cara-kerja" class="how-section">
+          <div><p class="eyebrow">Semudah itu</p><h2>Satu langkah kecil,<br /><em>arti yang besar.</em></h2></div>
+          <div class="steps grid grid-cols-3 gap-[13px] max-[620px]:grid-cols-1">
+            <article><span>01</span><div class="step-icon">＋</div><h3>Ceritakan</h3><p>Buat laporan barang hilang atau temuan dengan informasi yang jelas.</p></article>
+            <article><span>02</span><div class="step-icon">⌕</div><h3>Terhubung</h3><p>Komunitas membantu mencari kecocokan dan mengajukan klaim.</p></article>
+            <article><span>03</span><div class="step-icon">♥</div><h3>Kembali</h3><p>Barang kembali ke pemiliknya. Satu kebaikan menular ke yang lain.</p></article>
+          </div>
+        </section>
+      </main>
+      <footer><a class="brand" href="/"><span class="brand-mark">p</span>protex</a><span>Setiap barang punya cerita. Bantu ceritanya berlanjut.</span><span>© Protex</span></footer>
+    </div>
+
+    <dialog id="auth-dialog" class="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">Selamat datang</p><h2 id="auth-title">Masuk ke Protex</h2></div><button class="close" data-close="auth-dialog" type="button" aria-label="Tutup">×</button></div>
+      <div class="auth-tabs"><button class="auth-tab is-active" data-auth-mode="login" type="button">Masuk</button><button class="auth-tab" data-auth-mode="register" type="button">Daftar</button></div>
+      <form id="auth-form" class="form-stack">
+        <label id="name-field" hidden>Nama lengkap<input name="nama" autocomplete="name" /></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+        <label>Password<input name="password" type="password" minlength="8" autocomplete="current-password" required /></label>
+        <p id="auth-message" class="message" aria-live="polite"></p>
+        <button class="button button-dark button-wide" type="submit">Masuk</button>
+      </form>
+    </dialog>
+
+    <dialog id="report-dialog" class="dialog report-dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">Bantu komunitas</p><h2>Buat laporan</h2></div><button class="close" data-close="report-dialog" type="button" aria-label="Tutup">×</button></div>
+      <form id="report-form" class="form-stack">
+        <label>Judul laporan<input name="judul" maxlength="150" placeholder="Contoh: Dompet hitam tertinggal" required /></label>
+        <div class="form-row">
+          <label>Jenis laporan<select name="jenis_laporan" required><option value="hilang">Barang hilang</option><option value="ditemukan">Barang ditemukan</option></select></label>
+          <label>Kategori<select name="id_category" required><option value="">Pilih kategori</option></select></label>
+        </div>
+        <label>Lokasi<input name="lokasi" maxlength="255" placeholder="Contoh: Perpustakaan kampus" required /></label>
+        <label>Tanggal kejadian<input name="tanggal_kejadian" type="date" required /></label>
+        <label>Deskripsi<textarea name="deskripsi" rows="3" maxlength="2000" required></textarea></label>
+        <label>Foto barang (opsional, maks. 5 MB)<input name="image" type="file" accept="image/*" /></label>
+        <p id="report-message" class="message" aria-live="polite"></p>
+        <button class="button button-dark button-wide" type="submit">Kirim laporan ↗</button>
+      </form>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
